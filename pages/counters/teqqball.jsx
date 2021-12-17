@@ -1,5 +1,7 @@
 // import Link from 'next/link'
 import { Component } from 'react'
+import Heading from '../../components/Heading'
+import BackButton from '../../components/BackButton'
 
 
 export default class Teqqball extends Component {
@@ -11,6 +13,9 @@ export default class Teqqball extends Component {
     render() {
         return(
             <>
+                <Heading>
+                    <BackButton />
+                </Heading>
                 <p>Teqqball</p>
             </>
         )

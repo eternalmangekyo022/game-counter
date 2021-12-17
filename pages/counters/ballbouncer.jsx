@@ -1,7 +1,9 @@
 import { Component } from 'react'
+import Heading from '../../components/Heading'
+import BackButton from '../../components/BackButton'
 
 export default class BallBouncer extends Component {
-    constructor( props ) {
+    constructor(props) {
         super();
         this.state = {  };
     }
@@ -9,7 +11,9 @@ export default class BallBouncer extends Component {
     render() {
         return (
             <>
-
+                <Heading>
+                    <BackButton />
+                </Heading>
                 <p>Ball Bouncer</p>
             
             </>

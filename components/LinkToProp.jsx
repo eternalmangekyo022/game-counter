@@ -5,17 +5,14 @@ class LinkToProp extends Component {
     constructor(props) {
         super()
         this.props = props
-        this.state = {  }
+        
+        // refs
         this.anchor = createRef();
         this.refContainer = createRef();
+
+        // methods
         this.handleContainerOnclick = this.handleContainerOnclick.bind(this)
     }
-
-    // componentDidMount() {
-    //     this.refContainer.current.onClick = () => {
-    //         this.anchor.current.click();
-    //     }
-    // }
 
     handleContainerOnclick() {
         this.anchor.current.click();
