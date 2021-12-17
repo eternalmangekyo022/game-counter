@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createRef, Component } from 'react'
 
-export default class extends Component {
+export default class  LinkToProp extends Component {
     constructor(props) {
         super()
         this.props = props
