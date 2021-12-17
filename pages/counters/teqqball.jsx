@@ -2,7 +2,7 @@
 import { Component } from 'react'
 
 
-export default class extends Component {
+export default class Teqqball extends Component {
     constructor() {
         super();
         this.state = {  };
