@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: "Open Sans", sans-serif;
+}
+body
+{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(232, 232, 232);
+}
+@media only screen and (max-width: 600px){
+    body
+    {
+        height: 90vh;
+    }
+    .dropdown-toggle-container
+    {
+        transform: translateY(-50%);
+        left: 10% !important;
+    }
+    .dropdown-toggle-container.active
+    {
+        left: 8% !important;
+    }
+    
+}
+
+.dropdown
+{
+    position: relative;
+    width: 100%;
+    height: 8vh;
+    background-color: rgb(99, 90, 90);
+    transition: .3s;
+    
+}
+.dropdown.active
+{
+    height: 50vh;
+}
+.dropdown-container
+{
+    position: absolute;
+    width: 100%;
+    height: 8vh;
+}
+.dropdown-toggle-container
+{
+    position: absolute;
+    cursor: pointer;
+    width: 2.6rem;
+    aspect-ratio: 1.6 / 1;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+}
+.dropdown-toggle-container:focus:active
+{
+    outline: none;
+    box-shadow: none;
+}
+.dropdown-toggle-container:before,
+.dropdown-toggle-container:after
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: .125rem;
+    background-color: black;
+    transform: translate(-40%);
+}
+.dropdown-toggle-container:before
+{
+    top: 0;
+    transition: .3s;
+}
+.dropdown-toggle-container:after
+{
+    bottom: 0;
+    transition: .3s;
+}
+.dropdown-toggle-container.active
+{
+    left: 5%;
+}
+.dropdown-toggle-container.active:before
+{
+    top: 50%;
+    transform: rotate(45deg);
+    transition: .3s;
+}
+.dropdown-toggle-container.active:after
+{
+    top: 50%;
+    transform: rotate(-48deg);
+    transition: .3s;
+}
+.dropdown-toggle-container.active div
+{
+    transform: translateX(70%);
+    opacity: 0;
+    transition: .2s;
+}
+.dropdown-toggle-container div
+{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: black;
+}
+.link-container
+{
+    visibility: hidden;
+}
+.link-container.active
+{
+    visibility: visible;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 80%;
+    top: 60%;
+    transform: translateY(-50%);
+    border-bottom: 2px solid black;
+}
+.ref-container
+{
+    visibility: hidden;
+}
+.ref-container.active
+{
+    position: relative;
+    visibility: visible;
+    cursor: pointer;
+    width: 60%;
+    height: 2rem;
+    border: .125rem solid black;
+    border-radius: 1px;
+    background-color: rgba(0,0,0,20%);
+}
+.ref-container.active a
+{
+    text-decoration: none;
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
