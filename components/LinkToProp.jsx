@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createRef, Component } from 'react'
 
-export default class  LinkToProp extends Component {
+class LinkToProp extends Component {
     constructor(props) {
         super()
         this.props = props
@@ -11,12 +11,14 @@ export default class  LinkToProp extends Component {
         this.handleContainerOnclick = this.handleContainerOnclick.bind(this)
     }
 
+    // componentDidMount() {
+    //     this.refContainer.current.onClick = () => {
+    //         this.anchor.current.click();
+    //     }
+    // }
+
     handleContainerOnclick() {
-        try {
-            this.anchor.current.click();
-        } catch(err) {
-            console.error("Component hasn't rendered yet, or something else happened. Go check it out.")
-        }
+        this.anchor.current.click();
     }
 
     render() {
@@ -31,3 +33,4 @@ export default class  LinkToProp extends Component {
         )
     }
 }
+export default LinkToProp
