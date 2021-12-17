@@ -8,6 +8,10 @@ export default class BallBouncer extends Component {
         this.state = {  };
     }
 
+    componentDidMount() {
+        document.title = "GameCounter - Ball Bouncer";
+    }
+
     render() {
         return (
             <>

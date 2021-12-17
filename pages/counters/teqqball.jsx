@@ -4,10 +4,15 @@ import Heading from '../../components/Heading'
 import BackButton from '../../components/BackButton'
 
 
+
 export default class Teqqball extends Component {
     constructor() {
         super();
         this.state = {  };
+    }
+
+    componentDidMount() {
+        document.title = "GameCounter - Teqqball";
     }
 
     render() {

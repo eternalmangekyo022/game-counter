@@ -155,7 +155,11 @@ body
     height: 2rem;
     border: .125rem solid black;
     border-radius: 1px;
-    background-color: rgba(0,0,0,20%);
+    background-color: rgba(0, 0, 0, 20%);
+}
+.ref-container.active:hover
+{
+    background-color: rgba(119, 45, 45, 0.2);
 }
 .ref-container.active a
 {
