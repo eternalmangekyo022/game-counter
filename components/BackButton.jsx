@@ -4,27 +4,29 @@ import Link from 'next/link'
 class BackButton extends Component {
     constructor(props) {
         super()
+        // state
+        this.state = {
+            handleContainerClick: null
+        }
+
         this.props = props;
         // refs
         this.container = createRef();
         this.backToHome = createRef();
-
         // methods
-        this.handleButtonOnclick = this.handleButtonOnclick.bind(this);
-    }
 
+    }
     componentDidMount() {
-        setTimeout(() => { this.container.current.classList.add("active") }, 100)
-    }
-
-    handleButtonOnclick() {
-        this.backToHome.current.click();
+        (async function() {
+            setTimeout(() => { this.container.current.classList.add("active") }, 200);
+        }());
+        this.setState({ handleContainerClick: () => { this.backToHome.current.click() } });
     }
 
     render() {
         return(
             <>
-                <div ref={ this.container } className={ "back-button-container" } onClick={ this.handleButtonOnclick }>
+                <div ref={ this.container } className={ "back-button-container" } onClick={ this.state.handleContainerClick }>
                     <div className={ "back-button" }>
                         <Link href={ "/" }>
                             <a ref={ this.backToHome } className={ "hidden" }></a>
@@ -32,8 +34,8 @@ class BackButton extends Component {
                     </div>
                 </div>
             </>
-        )
-    }
-}
+        );
+    };
+};
 
 export default BackButton

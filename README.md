@@ -2,7 +2,8 @@
 
 multi page app
 
-hosted:
+auto-deployed:
+
 [Vercel](https://game-counter.vercel.app/)
 
 [Netlify](https://fazekast.com/)

@@ -30,7 +30,7 @@ class Dropdown extends Component {
                         </div>
                     </div>
                     <div className={ "link-container" } ref={ this.linkContainer }>
-                        <LinkToProp propName={ "./counters/teqqball" } displayName={ "Teqqball" } isVisible={ this.state.isVisible }/>
+                        <LinkToProp propName={ "./counters/taquball" } displayName={ "Taquball" } isVisible={ this.state.isVisible }/>
                         <LinkToProp propName={ "./counters/ballbouncer" } displayName={ "Ball Bouncer" } isVisible={ this.state.isVisible }/>
                     </div>
                 </div>
