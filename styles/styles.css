@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+:root
+{
+    --dropdown-height: 8vh;
+}
+
 *
 {
+    z-index: 1;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,6 +33,17 @@ body
     {
         left: 8% !important;
     }
+    .content-wrapper
+    {
+        height: calc(90vh - var(--dropdown-height)) !important;
+    }
+
+    .taqu-field-container
+    {
+        width: 70% !important;
+        /* height: 60% !important; */
+    }
+
     
 }
 .testing
@@ -54,7 +71,7 @@ body
 {
     position: absolute;
     width: 100%;
-    height: 8vh;
+    height: var(--dropdown-height);
 }
 .dropdown-toggle-container
 {
@@ -194,24 +211,123 @@ body
 .back-button
 {
     width: 80%;
-    height: .25rem;
+    height: .15rem;
     background-color: black;
 }
 .back-button:before, .back-button:after
 {
     content: "";
     position: absolute;
-    width: 45%;
-    height: .25rem;
+    width: 42%;
+    height: .15rem;
     background-color: black;
 }
 .back-button:before
 {
     top: 60%;
-    transform: rotate(35deg);
+    transform: rotate(33deg);
 }
 .back-button:after
 {
-    top: 31%;
+    top: 33%;
     transform: rotate(-35deg);
+}
+.content-wrapper
+{
+    position: absolute;
+    height: calc(100vh - var(--dropdown-height));
+    width: 100%;
+}
+@keyframes taqu-field-expand
+{
+    0%
+    {
+        height: 0%;
+    }
+    100%
+    {
+        height: 80%;
+    }
+}
+@keyframes taqu-field-enter
+{
+    0%
+    {
+        top: 0%;
+    }
+    100%
+    {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.taqu-field-container
+{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 20%;
+    height: 0%;
+    border: .1rem solid black;
+
+    animation-name: taqu-field-enter, taqu-field-expand;
+    animation-delay: .4s, .7s;
+    animation-duration: .5s, .3s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+.taqu-field-container div
+{
+    height: 33.333333%;
+    width: 100%;
+}
+.taqu-field-middle
+{
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+.taqu-field-middle div
+{
+    height: 100%;
+}
+.taqu-field-line
+{
+    position: relative;
+}
+.taqu-field-line:before
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: .1rem;
+    background: black;
+    top: 50%;
+    transform: translateY(-50%);
+}
+@keyframes taqu-frame-box-expand
+{
+    0% { height: 0%; }
+    100% { height: 98%; }
+}
+.taqu-field-box
+{
+    position: relative;
+    width: 100%;
+}
+.taqu-field-box:before
+{
+    content: "";
+    position: absolute;
+    width: 99%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: .1rem solid black;
+    animation-name: taqu-frame-box-expand;
+    animation-duration: .2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    
 }

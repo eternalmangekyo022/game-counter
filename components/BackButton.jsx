@@ -16,10 +16,11 @@ class BackButton extends Component {
         // methods
 
     }
-    componentDidMount() {
+    async componentDidMount() {
         (async function() {
             setTimeout(() => { this.container.current.classList.add("active") }, 200);
         }());
+        
         this.setState({ handleContainerClick: () => { this.backToHome.current.click() } });
     }
 
