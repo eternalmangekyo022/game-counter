@@ -17,6 +17,7 @@ body
     width: 100vw;
     height: 100vh;
     background-color: rgb(232, 232, 232);
+    overflow: hidden;
 }
 @media only screen and (max-width: 600px){
     body
@@ -37,7 +38,7 @@ body
         height: calc(90vh - var(--dropdown-height)) !important;
     }
 
-    .taqu-field-container
+    .tri-field-container
     {
         width: 70% !important;
         /* height: 60% !important; */
@@ -237,7 +238,7 @@ body
     height: calc(100vh - var(--dropdown-height));
     width: 100%;
 }
-@keyframes taqu-field-expand
+@keyframes tri-field-expand
 {
     0%
     {
@@ -248,7 +249,7 @@ body
         height: 80%;
     }
 }
-@keyframes taqu-field-enter
+@keyframes tri-field-enter
 {
     0%
     {
@@ -260,7 +261,7 @@ body
         transform: translate(-50%, -50%);
     }
 }
-.taqu-field-container
+.tri-field-container
 {
     display: flex;
     flex-direction: column;
@@ -270,34 +271,34 @@ body
     width: 20%;
     height: 0%;
 
-    animation-name: taqu-field-enter, taqu-field-expand;
+    animation-name: tri-field-enter, tri-field-expand;
     animation-delay: .2s, .7s;
     animation-duration: .5s, .3s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
 }
-.taqu-field-big.first
+.tri-field-big.first
 {
     border-bottom: none;
 }
 
-.taqu-field-big
+.tri-field-big
 {
     height: 50%;
     width: 100%;
     border: .1rem solid black;
 }
-.taqu-field-big:hover
+.tri-field-big:hover
 {
     background: rgb(181, 179, 179);
     cursor: pointer;
 }
-@keyframes taqu-field-middle-expand
+@keyframes tri-field-middle-expand
 {
     0% { height: 0%; opacity: 1; }
     100% { height: calc(100% / 3); opacity: 1; }
 }
-.taqu-field-middle
+.tri-field-middle
 {
     opacity: 0;
     position: absolute;
@@ -308,8 +309,66 @@ body
     border: .1rem solid black;
     z-index: 2;
     background: #e8e8e8;
-    animation-name: taqu-field-middle-expand;
+    animation-name: tri-field-middle-expand;
     animation-duration: .3s;
     animation-delay: .9s;
     animation-fill-mode: forwards;
+}
+@keyframes reset-button-container-in
+{
+    0% { right: -50% }
+    100% {  }
+}
+
+
+.reset-button-container
+{
+    position: absolute;
+    width: 2.5rem;
+    aspect-ratio: 1 / 1;
+    /* background: black; */
+    cursor: pointer;
+
+    top: 45%;
+    right: 10%;
+    transform: translateY(-50%);
+    border-bottom: .125rem solid black;
+
+    animation-name: reset-button-container-in;
+    animation-duration: .7s;
+    animation-fill-mode: forwards;
+    
+}
+.reset-button-container::before,
+.reset-button-container::after
+{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: .125rem;
+    background: black;
+    bottom: 39%;
+}
+.reset-button-container::before
+{
+    left: -25%;
+    transform: rotate(-60deg);
+}
+.reset-button-container::after
+{
+    left: 25%;
+    transform: rotate(60deg);
+}
+.reset-button-container div
+{
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    font-size: 1.3rem;
+}
+
+.reset-button-container div::selection
+{
+    background: none;
 }

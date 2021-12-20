@@ -1,16 +1,16 @@
 import { Component } from 'react'
 
 class Heading extends Component {
-    constructor(props) {
+    constructor({ children }) {
         super()
         this.state = {  }
-        this.props = props
+        this.children = children
     }
 
     render() {
         return(
             <>
-                <div className="dropdown">{ this.props.children }</div>
+                <div className="dropdown">{ this.children }</div>
             </>
         )
     }

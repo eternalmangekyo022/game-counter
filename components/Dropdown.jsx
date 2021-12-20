@@ -2,11 +2,12 @@ import { createRef, Component } from 'react'
 import LinkToProp from './LinkToProp'
 
 class Dropdown extends Component {
-    constructor(props) {
+    constructor({  }) {
         super();
         this.state = {
             isVisible: false 
         }
+
         this.dropdown = createRef();
         this.toggleButton = createRef();
         this.linkContainer = createRef();

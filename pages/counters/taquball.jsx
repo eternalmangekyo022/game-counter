@@ -1,13 +1,12 @@
 import { Component } from 'react'
 import Heading from '../../components/Heading'
 import BackButton from '../../components/BackButton'
-
-
+import ResetButton from '../../components/ResetButton'
 
 export default class Taquball extends Component {
     constructor() {
         super();
-        this.state = {  };
+        // this.state = {  };
     }
 
     componentDidMount() {
@@ -19,16 +18,19 @@ export default class Taquball extends Component {
             <>
                 <Heading>
                     <BackButton />
+                    <ResetButton />
                 </Heading>
                 <div className={ "content-wrapper" }>
-                    <div className={ "taqu-field-container" }>
-                        <div className="taqu-field-big"></div>
-                        <div className="taqu-field-middle">
-                            <div className="taqu-field-line"></div>
-                            <div className="taqu-field-box"></div>
-                            <div className="taqu-field-line"></div>
+
+                    <div className={ "tri-field-container" }>
+
+                        <div className={ "tri-field-big first" }></div>
+                        <div className={ "tri-field-big" }></div>
+
+                        <div className={ "tri-field-middle" }>
+
                         </div>
-                        <div className="taqu-field-big"></div>
+
                     </div>
                 </div>
             </>
