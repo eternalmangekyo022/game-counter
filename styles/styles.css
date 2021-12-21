@@ -372,3 +372,59 @@ body
 {
     background: none;
 }
+@keyframes minus-button-hover
+{
+    0% { background: red; }
+    100% { background: rgb(243, 173, 173); }
+}
+@keyframes minus-button-in
+{
+    0% { opacity: 0 }
+    100% { opacity: 1 }
+}
+.minus-button
+{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    width: 7rem;
+    height: 1.5rem;
+    background: rgb(220, 107, 107);
+    cursor: pointer;
+
+}
+.minus-button.start
+{
+    opacity: 0 !important;
+    animation-name: minus-button-in;
+    animation-duration: .3s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+}
+.minus-button:before
+{
+    content: "";
+    position: absolute;
+    height: 15%;
+    width: 20%;
+    background: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.minus-button:hover
+{
+    opacity: 1;
+    animation-name: minus-button-hover;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+}
+.minus-button.first
+{
+    top: -7%;
+}
+.minus-button.second
+{
+    top: 107%;
+    transform: translate(-50%, -100%);
+}
