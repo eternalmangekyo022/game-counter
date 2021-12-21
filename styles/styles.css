@@ -11,6 +11,10 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     font-family: "Open Sans", sans-serif;
 }
+*::selection
+{
+    background: none;
+}
 body
 {
     width: 100vw;
@@ -37,14 +41,14 @@ body
         height: calc(90vh - var(--dropdown-height)) !important;
     }
 
-    .tri-field-container
-    {
-        width: 70% !important;
-        /* height: 60% !important; */
-    }
     .reset-button-container
     {
         animation-name: none !important;
+    }
+    .player-set-container
+    {
+        width: 2rem !important;
+        height: 4rem !important;
     }
 
     
@@ -189,10 +193,6 @@ body
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.ref-container.active a::selection
-{
-    background-color: none;
-}
 .back-button-container
 {
     display: flex;
@@ -274,7 +274,7 @@ body
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    width: 20%;
+    width: max(20%, 20rem);
     height: 0%;
 
     animation-name: tri-field-enter, tri-field-expand;
@@ -375,11 +375,6 @@ body
     top: 65%;
     transform: translate(-50%, -50%);
     font-size: 1.3rem;
-}
-
-.reset-button-container div::selection
-{
-    background: none;
 }
 @keyframes minus-button-hover
 {
@@ -505,10 +500,7 @@ body
     transform: translate(-50%);
     font-size: 1.4rem;
 }
-.popup.active .popup-text::selection
-{
-    background: none;
-}
+
 .popup.active .popup-cancel-container
 {
     position: relative;
@@ -559,10 +551,6 @@ body
     transform: translate(-50%, -50%);
     cursor: text;
 }
-.name-container.active span::selection
-{
-    background: none;
-}
 .name-container.first.active
 {
     top: var(--distance-from-border);
@@ -596,4 +584,24 @@ body
 .tri-field-middle:after
 {
     transform: translate(-50%, -50%) rotate(-45deg);
+}
+.player-set-container
+{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    transform: translate(-100%, -50%);
+    width: 2.4rem;
+    height: 5rem;
+    /* background: rgba(0, 0, 0, 20%); */
+}
+.player-set
+{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

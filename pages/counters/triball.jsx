@@ -35,19 +35,20 @@ export default class Taquball extends Component {
     handlePlayerPlus(player) {
         if(this.state[player].points == 14) {
             if(this.state[player].setWins == 2) {
-                alert(`Set won by ${ this.state[player].name }`);
+                alert(`Set won by ${ this.state[player].name }!`);
+                this.setState({ player1: { points: 0, setWins: 0 }, player2: { points: 0, setWins: 0 } })
             } else {
                 this.setState({ [player]: { points: 0, setWins: this.state[player].setWins + 1 } })
             }
         } else {
-            this.setState({ [player]: { points: this.state[player].points + 1 } });
+            this.setState({ [player]: { points: this.state[player].points + 1, setWins: this.state[player].setWins } });
         }
     }
     
     handleMinusClick(player) {
         const { points } = this.state[player];
 
-        if(points) this.setState({ [player]: { points: points - 1 } })
+        if(points) this.setState({ [player]: { points: points - 1, setWins: this.state[player].setWins } })
         
     }
 
@@ -84,8 +85,7 @@ export default class Taquball extends Component {
     }
 
     render() {
-        return(
-            <>
+        return <>
                 <Heading>
                     <BackButton />
                     <div onClick={ this.handleResetButton } className={ "reset-button-container" }>
@@ -95,6 +95,10 @@ export default class Taquball extends Component {
                 <div className={ "content-wrapper" }>
 
                     <div className={ "tri-field-container" }>
+                        <div className={ "player-set-container" }>
+                            <div className={ "player-set first" }>{ this.state.player1.setWins }</div>
+                            <div className={ "player-set second" }>{ this.state.player2.setWins }</div>
+                        </div>
 
                         <div onClick={ e => this.handleMinusClick("player1") } className={ `minus-button first ${ this.state.classStart }` }></div>
                         <div onClick={ e => this.handleMinusClick("player2") } className={ `minus-button second ${ this.state.classStart }` }></div>
@@ -127,6 +131,5 @@ export default class Taquball extends Component {
                     </div>
                 </div>
             </>
-        )
     }
 }
