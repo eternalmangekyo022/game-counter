@@ -428,3 +428,86 @@ body
     top: 107%;
     transform: translate(-50%, -100%);
 }
+.reset-container
+{
+    visibility: hidden;
+}
+
+.reset-container.active
+{
+    visibility: visible;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    /* background: rgba(0, 0, 0, 50%);   */
+}
+@keyframes reset-popup-in
+{
+    0% { top: 100%; }
+    100% { top: 40%; transform: translateY(-50%, -50%); }
+}
+.reset-popup.active
+{
+    display: grid;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20rem;
+    height: 20%;
+    background: white;
+    animation-name: reset-popup-in;
+    animation-duration: .2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(2, auto);
+
+    border-radius: 10%;
+    border: .125rem dotted black;
+}
+
+.reset-popup.active div.reset-text-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / 3;
+}
+
+.reset-popup.active .reset-text
+{
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%);
+    font-size: 1.4rem;
+}
+
+.reset-popup.active .reset-cancel-container
+{
+    position: relative;
+}
+.reset-popup.active .reset-cancel,
+.reset-popup.active .reset-confirm
+{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 60%;
+    width: 70%;
+    background: #e74c3c;
+    cursor: pointer;
+}
+
+.reset-popup.active .reset-confirm-container
+{
+    position: relative;
+}
+.reset-popup.active .reset-confirm
+{
+
+    background: #f1c40f;
+}

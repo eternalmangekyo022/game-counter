@@ -1,66 +1,44 @@
 import { Component, createRef } from 'react'
 import Heading from '../../components/Heading'
 import BackButton from '../../components/BackButton'
-import ResetButton from '../../components/ResetButton'
+import MinusButton from '../../components/MinusButton'
 
-class MinusButton extends Component {
-    constructor({ player, num, ref }) {
-        super()
-        this.num = num
-        this.ref = ref
-        this.state = {
-            player,
-            classStart: "start",
-        }
-        this.handleOnClick = this.handleOnClick.bind(this);
-        this.handleMinusPoints = this.handleMinusPoints.bind(this)
-    }
-
-    handleMinusPoints() {
-        alert("Has to be more than 0")
-    }
-
-    handleOnClick() {
-        this.setState(prev => {
-            if(prev.player.points > 0) {
-                return { player: { points: prev.player.points - 1 } }
-            } else {
-                this.handleMinusPoints()
-            }
-        });
-    }
-
-    componentDidMount() {
-        (async function() {
-            setTimeout(() => this.setState({ classStart: "" }), 1000)
-        }());
-    }
-
-    render() {
-        return(
-            <>
-                <div onClick={ this.handleOnClick } ref={ this.ref } className={ `minus-button ${ this.state.classStart } ${ this.num }` }></div>
-            </>
-        )
-    }
+const defaultPlayer = {
+    name: "",
+    points: 0,
+    setWins: 0
 }
-
 
 export default class Taquball extends Component {
     constructor({  }) {
         super();
-        const defaultPlayer = {
-            name: "",
-            points: 0,
-            setWins: 0
-        } 
+        
         this.state = {
             player1: defaultPlayer,
-            player2: defaultPlayer
+            player2: defaultPlayer,
+            reset: ""
         };
 
         this.minusButtonFirst = createRef();
         this.minusButtonSecond = createRef();
+
+        this.handleResetButton = this.handleResetButton.bind(this);
+        this.cancelReset = this.cancelReset.bind(this);
+        this.confirmReset = this.confirmReset.bind(this);
+        
+    }
+
+    handleResetButton() {
+        this.setState({ reset: "active" });
+    }
+
+    cancelReset() {
+        this.setState({ reset: "" });
+    }
+
+    confirmReset() {
+
+        this.cancelReset();
     }
 
     componentDidMount() {
@@ -72,15 +50,17 @@ export default class Taquball extends Component {
             <>
                 <Heading>
                     <BackButton />
-                    <ResetButton />
+                    <div onClick={ this.handleResetButton } className={ "reset-button-container" }>
+                        <div>!</div>
+                    </div>
                 </Heading>
                 <div className={ "content-wrapper" }>
 
 
                     <div className={ "tri-field-container" }>
 
-                    <MinusButton num={ "first" } ref={ this.minusButtonFirst } player={ this.state.player1 }/>
-                    <MinusButton num={ "second" } ref={ this.minusButtonSecond } player={ this.state.player2 } />
+                        <MinusButton num={ "first" } ref={ this.minusButtonFirst } player={ this.state.player1 }/>
+                        <MinusButton num={ "second" } ref={ this.minusButtonSecond } player={ this.state.player2 } />
 
                         <div className={ "tri-field-big first" }></div>
                         <div className={ "tri-field-big" }></div>
@@ -91,6 +71,19 @@ export default class Taquball extends Component {
 
                     </div>
 
+                </div>
+                <div className={ `reset-container ${ this.state.reset }` }>
+                    <div className={ `reset-popup ${ this.state.reset }` }>
+                        <div className="reset-text-container">
+                            <div className="reset-text">Reset?</div>
+                        </div>
+                        <div className="reset-cancel-container">
+                            <div onClick={ this.cancelReset } className="reset-cancel"></div>
+                        </div>
+                        <div className="reset-confirm-container">
+                            <div onClick={ this.confirmReset } className="reset-confirm"></div>
+                        </div>
+                    </div>
                 </div>
             </>
         )
