@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import Heading from '../../components/Heading'
 import BackButton from '../../components/BackButton'
-import NameContainer from '../../components/NameContainer'
 
 class Player {
     constructor(_name="", points=0, setWins=0) {
@@ -21,7 +20,8 @@ export default class Taquball extends Component {
             reset: "",
             nameContainer: "",
             classStart: "start",
-            maxPoints: 15
+            maxPoints: 15,
+            nameContainerClass: "",
         };
 
         this.handleResetButton = this.handleResetButton.bind(this);
@@ -30,8 +30,15 @@ export default class Taquball extends Component {
         this.resetOut = this.resetOut.bind(this);
         this.handlePlusClick = this.handlePlusClick.bind(this);
         this.handleMinusClick = this.handleMinusClick.bind(this);
+        this.changePlayerName = this.changePlayerName.bind(this);
     }
     
+    changePlayerName(player) {
+        const _player = { ...this.state[player] };
+        const name = prompt("Új név?")
+        if(name) { _player.name= name; this.setState({ [player]: _player }); }
+    }
+
     handlePlusClick(player) {
         const _player = { ...this.state[player] };
         const opposite = { ...this.state[player == "player1" ? "player2" : "player1"] }
@@ -72,7 +79,13 @@ export default class Taquball extends Component {
 
     confirmReset() {
         this.cancelReset();
-        this.setState({ player1: { points: 0, setWins: 0 }, player2: { points: 0, setWins: 0 } })
+        const { player1, player2 } = { ...this.state }
+        player1.points = 0;
+        player1.setWins = 0;
+        player2.points = 0;
+        player2.setWins = 0;
+
+        this.setState({ player1: player1, player2: player2 })
     }
 
     async resetOut() {
@@ -93,7 +106,7 @@ export default class Taquball extends Component {
     componentDidMount() {
         document.title = "GameCounter - TriBall";
         (async function() {
-            setTimeout(() => this.setState({ classStart: "" }), 1000)
+            setTimeout(() => this.setState({ classStart: "", nameContainerClass: "active" }), 1000)
         }());
     }
 
@@ -108,8 +121,14 @@ export default class Taquball extends Component {
                 <div className={ "content-wrapper" }>
 
                     <div className={ "tri-field-container" }>
-                        <NameContainer player={ this.state.player1 } classNum={ "first" } ></NameContainer>
-                        <NameContainer player={ this.state.player2 } classNum={ "second" } ></NameContainer>
+
+                    <div onClick={ e => this.changePlayerName("player1") } className={ `name-container first ${ this.state.nameContainerClass }` }>
+                        <span>{ this.state.player1.name }</span>
+                    </div>
+                    
+                    <div onClick={ e => this.changePlayerName("player2") } className={ `name-container second ${ this.state.nameContainerClass }` }>
+                        <span>{ this.state.player2.name }</span>
+                    </div>
 
                         <div className={ "player-set-container" }>
                             <div className={ "player-set first" }>{ this.state.player1.setWins }</div>
