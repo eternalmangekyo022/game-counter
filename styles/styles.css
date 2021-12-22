@@ -535,13 +535,12 @@ body
 {
     width: 3rem;
     height: 1rem;
-    z-index: 2;
+    z-index: 3;
     --distance-from-border: 2%;
     visibility: visible;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    /* background: rgba(0, 0, 0, 20%); */
 }
 .name-container.active span
 {
@@ -594,7 +593,6 @@ body
     transform: translate(-100%, -50%);
     width: 2.4rem;
     height: 5rem;
-    /* background: rgba(0, 0, 0, 20%); */
 }
 .player-set
 {
