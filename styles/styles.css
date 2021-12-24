@@ -586,6 +586,11 @@ body
 }
 .player-set-container
 {
+    visibility: hidden;
+}
+.player-set-container.active
+{
+    visibility: visible;
     display: flex;
     flex-direction: column;
     position: absolute;

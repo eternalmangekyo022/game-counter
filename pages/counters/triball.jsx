@@ -69,7 +69,6 @@ export default class Taquball extends Component {
             _player.points = this.state.maxPoints - 1;
         }
         this.setState({ [player]: _player });
-
     }
 
     cancelReset() {
@@ -130,7 +129,7 @@ export default class Taquball extends Component {
                         <span>{ this.state.player2.name }</span>
                     </div>
 
-                        <div className={ "player-set-container" }>
+                        <div className={ `player-set-container ${ this.state.nameContainerClass }` }>
                             <div className={ "player-set first" }>{ this.state.player1.setWins }</div>
                             <div className={ "player-set second" }>{ this.state.player2.setWins }</div>
                         </div>
