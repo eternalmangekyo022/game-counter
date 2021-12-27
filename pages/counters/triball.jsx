@@ -1,119 +1,84 @@
-import { Component } from 'react'
-import Heading from '../../components/Heading'
-import BackButton from '../../components/BackButton'
+import { useState, useEffect } from 'react';
+import Heading from '../../components/Heading';
+import BackButton from '../../components/BackButton';
+import MinusButton from '../../components/MinusButton'
 
 class Player {
-    constructor(_name="", points=0, setWins=0) {
+    constructor(_name="", number, points=0, setWins=0) {
         this.name = _name;
+        this.number = number;
         this.points = points;
         this.setWins = setWins;
     }
 }
 
-export default class Taquball extends Component {
-    constructor() {
-        super();
-        
-        this.state = {
-            player1: new Player("Róbert"),
-            player2: new Player("István"),
-            reset: "",
-            nameContainer: "",
-            classStart: "start",
-            maxPoints: 15,
-            nameContainerClass: "",
-        };
-
-        this.handleResetButton = this.handleResetButton.bind(this);
-        this.cancelReset = this.cancelReset.bind(this);
-        this.confirmReset = this.confirmReset.bind(this);
-        this.resetOut = this.resetOut.bind(this);
-        this.handlePlusClick = this.handlePlusClick.bind(this);
-        this.handleMinusClick = this.handleMinusClick.bind(this);
-        this.changePlayerName = this.changePlayerName.bind(this);
-    }
+const Triball = () => {
+    // state
+    const [player1, setPlayer1] = useState(new Player("Róbert", "first"));
+    const [player2, setPlayer2] = useState(new Player("István", "second"));
+    const [styles, setStyles] = useState({ reset: "", nameContainer: "" });
     
-    changePlayerName(player) {
-        const _player = { ...this.state[player] };
-        const name = prompt("Új név?")
-        if(name) { _player.name= name; this.setState({ [player]: _player }); }
+    // non-stateful state
+    const [maxPoints, setMaxPoints] = useState(15);
+    const [maxWins, setMaxWins] = useState(3);
+
+
+    const changePlayerName = setPlayer => {
+        const newName = prompt("Új név?");
+        if(!newName) return null
+        setPlayer(prev => { return { ...prev, name: newName } })
     }
 
-    handlePlusClick(player) {
-        const _player = { ...this.state[player] };
-        const opposite = { ...this.state[player == "player1" ? "player2" : "player1"] }
-        if(_player.points == this.state.maxPoints - 1) {
-            if(_player.setWins == 2) {
-                alert(`Set won by ${ _player.name }!`);
-                _player.points = 0;
-                _player.setWins = 0;
-                opposite.points = 0;
-                opposite.setWins = 0;
-            } else {
-                _player.points = 0;
-                opposite.points = 0;
-                _player.setWins++;
+    const handlePlusClick = player => {
+        let { points, setWins } = { ...player }
+        const setPlayer = player.number === "first" ? setPlayer1 : setPlayer2
+        points++
+        setPlayer(prev => { return { ...prev, points: prev.points + 1 } })
+
+        if(points === maxPoints) {
+            points = 0
+            setWins++
+            
+            [setPlayer1, setPlayer2].forEach(i => i(prev => { return { ...prev, points: 0 } }));
+            setPlayer(prev => { return { ...prev, setWins: setWins == maxWins ? 0: setWins } })
+            if(setWins == maxWins) {
+                setPlayer1(prev => { return { ...prev, points: 0, setWins: 0 } });
+                setPlayer2(prev => { return { ...prev, points: 0, setWins: 0 } });
             }
-        } else {
-            _player.points++;
-        }
-        this.setState({ [player]: _player, [player == "player1" ? "player2" : "player1"]: opposite })
-    }
-    
-    handleMinusClick(player) {
-        const _player = { ...this.state[player] }
-        const { points, setWins } = _player;
-        if(points) _player.points--
-        else if(setWins) {
-            _player.setWins--;
-            _player.points = this.state.maxPoints - 1;
-        }
-        this.setState({ [player]: _player });
-    }
-
-    cancelReset() {
-        this.setState({ reset: "" });
-        this.resetOut();
-    }
-
-    confirmReset() {
-        this.cancelReset();
-        const { player1, player2 } = { ...this.state }
-        player1.points = 0;
-        player1.setWins = 0;
-        player2.points = 0;
-        player2.setWins = 0;
-
-        this.setState({ player1: player1, player2: player2 })
-    }
-
-    async resetOut() {
-        this.setState({ reset: "active out" })
-        setTimeout(() => { this.setState({ reset: "" }) }, 300)
-    }
-
-    handleResetButton() {
-        let { reset } = this.state
-
-        if(!reset) {
-            this.setState({ reset: "active" });
-        } else if(reset == "active") {
-            this.resetOut();
         }
     }
 
-    componentDidMount() {
+    const resetOut = async() => {
+        setStyles(prev => { return { ...prev, reset: "active out" } })
+        setTimeout(() => { setStyles(prev => { return { ...prev, reset: "" } }) }, 300)
+    }
+
+    const cancelReset = () => {
+        setStyles(prev => { return { ...prev, reset: "" } });
+        resetOut();
+    }
+
+    const confirmReset = () => {
+        cancelReset();
+        [setPlayer1, setPlayer2].forEach(i => i(prev => { return { ...prev, points: 0, setWins: 0 } }));
+    }
+
+    const handleResetButton = () => {
+        if(!styles.reset) setStyles(prev => { return { ...prev, reset: "active" } });
+        else if(styles.reset == "active") resetOut()
+    }
+
+    useEffect(() => {
         document.title = "GameCounter - TriBall";
         (async function() {
-            setTimeout(() => this.setState({ classStart: "", nameContainerClass: "active" }), 1000)
-        }());
-    }
+            setTimeout(() => { setStyles({ nameContainer: "active" }) }, 1000)
+        }())
+    }, [])
 
-    render() {
-        return <>
+    return <>
                 <Heading>
                     <BackButton />
-                    <div onClick={ this.handleResetButton } className={ "reset-button-container" }>
+                    <div onClick={ handleResetButton } className={ "reset-button-container" }>
                         <div>!</div>
                     </div>
                 </Heading>
@@ -121,44 +86,44 @@ export default class Taquball extends Component {
 
                     <div className={ "tri-field-container" }>
 
-                    <div onClick={ e => this.changePlayerName("player1") } className={ `name-container first ${ this.state.nameContainerClass }` }>
-                        <span>{ this.state.player1.name }</span>
+                    <div onClick={ e => changePlayerName(setPlayer1) } className={ `name-container first ${ styles.nameContainer }` }>
+                        <span>{ player1.name }</span>
                     </div>
                     
-                    <div onClick={ e => this.changePlayerName("player2") } className={ `name-container second ${ this.state.nameContainerClass }` }>
-                        <span>{ this.state.player2.name }</span>
+                    <div onClick={ e => changePlayerName(setPlayer2) } className={ `name-container second ${ styles.nameContainer }` }>
+                        <span>{ player2.name }</span>
                     </div>
 
-                        <div className={ `player-set-container ${ this.state.nameContainerClass }` }>
-                            <div className={ "player-set first" }>{ this.state.player1.setWins }</div>
-                            <div className={ "player-set second" }>{ this.state.player2.setWins }</div>
+                        <div className={ `player-set-container ${ styles.nameContainer }` }>
+                            <div className={ "player-set first" }>{ player1.setWins }</div>
+                            <div className={ "player-set second" }>{ player2.setWins }</div>
                         </div>
 
-                        <div onClick={ e => this.handleMinusClick("player1") } className={ `minus-button first ${ this.state.classStart }` }></div>
-                        <div onClick={ e => this.handleMinusClick("player2") } className={ `minus-button second ${ this.state.classStart }` }></div>
+                        <MinusButton player={player1} setPlayer={setPlayer1} maxPoints={maxPoints}/>
+                        <MinusButton player={player2} setPlayer={setPlayer2} maxPoints={maxPoints}/>
 
-                        <div onClick={ e => { this.handlePlusClick("player1") } } className={ "tri-field-big" }></div>
-                        <div onClick={ e => { this.handlePlusClick("player2") } } className={ "tri-field-big" }></div>
+                        <div onClick={ e => { handlePlusClick(player1) } } className={ "tri-field-big" }></div>
+                        <div onClick={ e => { handlePlusClick(player2) } } className={ "tri-field-big" }></div>
 
                         <div className={ "tri-field-middle" }>
-                            <div className={ "player-point-container first" }><span>{ this.state.player1.points }</span></div>
-                            <div className={ "player-point-container second" }><span>{ this.state.player2.points }</span></div>
+                            <div className={ "player-point-container first" }><span>{ player1.points }</span></div>
+                            <div className={ "player-point-container second" }><span>{ player2.points }</span></div>
                         </div>
                     </div>
                 </div>
-                <div className={ `popup-container ${ this.state.reset }` }>
-                    <div className={ `popup ${ this.state.reset }` }>
+                <div className={ `popup-container ${ styles.reset }` }>
+                    <div className={ `popup ${ styles.reset }` }>
                         <div className="popup-text-container">
                             <div className="popup-text">Reset?</div>
                         </div>
                         <div className="popup-cancel-container">
-                            <div onClick={ this.cancelReset } className="popup-cancel"></div>
+                            <div onClick={ cancelReset } className="popup-cancel"></div>
                         </div>
                         <div className="popup-confirm-container">
-                            <div onClick={ this.confirmReset } className="popup-confirm"></div>
+                            <div onClick={ confirmReset } className="popup-confirm"></div>
                         </div>
                     </div>
                 </div>
-            </>
-    }
+    </>
 }
+export default Triball

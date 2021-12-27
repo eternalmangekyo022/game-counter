@@ -1,42 +1,27 @@
-import { Component, createRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 
-class BackButton extends Component {
-    constructor(props) {
-        super()
-        // state
-        this.state = {
-            handleContainerClick: null
-        }
+const BackButton = ({  }) => {
+    const [containerClassName, setContainerClassName] = useState("back-button-container");
 
-        this.props = props;
-        // refs
-        this.container = createRef();
-        this.backToHome = createRef();
-        // methods
+    const back = useRef(null);
+    const container = useRef(null);
 
-    }
-    async componentDidMount() {
+    useEffect(() => {
         (async function() {
-            setTimeout(() => { this.container.current.classList.add("active") }, 200);
-        }());
-        
-        this.setState({ handleContainerClick: () => { this.backToHome.current.click() } });
-    }
+            setTimeout(() => setContainerClassName(prev => prev + " active"), 200);
+        })();
+    }, [])
 
-    render() {
-        return(
-            <>
-                <div ref={ this.container } className={ "back-button-container" } onClick={ this.state.handleContainerClick }>
-                    <div className={ "back-button" }>
-                        <Link href={ "/" }>
-                            <a ref={ this.backToHome } className={ "hidden" }></a>
-                        </Link>
-                    </div>
+    return <>
+            <div ref={ container } className={ containerClassName } onClick={ () => { back?.current?.click() } }>
+                <div className={ "back-button" }>
+                    <Link href={ "/" }>
+                        <a ref={ back } className={ "hidden" }></a>
+                    </Link>
                 </div>
-            </>
-        );
-    };
-};
+            </div>
+    </>
+}
 
 export default BackButton

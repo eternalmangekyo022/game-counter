@@ -461,7 +461,7 @@ body
     transform: translate(-50%, -50%);
     width: 20rem;
     height: 20%;
-    background: white;
+    background: rgba(232, 232, 232, 90%);
     animation-name: popup-in;
     animation-duration: .2s;
     animation-fill-mode: forwards;
