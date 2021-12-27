@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default ({ player, setPlayer, maxPoints }) => {
+const MinusButton = ({ player, setPlayer, maxPoints }) => {
     // state = player
     // setState = setPlayer
 
@@ -24,3 +24,5 @@ export default ({ player, setPlayer, maxPoints }) => {
         <div onClick={ handleClick } className={ `minus-button ${player.number} ${className}` }></div>
     </>
 }
+
+export default MinusButton

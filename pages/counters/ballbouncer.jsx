@@ -1,26 +1,18 @@
-import { Component } from 'react'
+import { useEffect } from 'react'
 import Heading from '../../components/Heading'
 import BackButton from '../../components/BackButton'
 
-export default class BallBouncer extends Component {
-    constructor(props) {
-        super();
-        this.state = {  };
-    }
+const BallBouncer = ({  }) => {
+    useEffect(() => {
+        document.title = "GameCounter - Ball Bouncer"
+    }, [])
 
-    componentDidMount() {
-        document.title = "GameCounter - Ball Bouncer";
-    }
-
-    render() {
-        return (
-            <>
-                <Heading>
-                    <BackButton />
-                </Heading>
-                <p>Ball Bouncer</p>
-            
-            </>
-        )
-    }
+    return <>
+        <Heading>
+            <BackButton />
+        </Heading>
+        <p>Ball Bouncer</p>
+    </>
 }
+
+export default BallBouncer

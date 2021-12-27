@@ -1,1 +1,1 @@
-export default ({ children }) => <div className={ "dropdown" }>{ children }</div>
+const Heading = ({ children }) => <div className={ "dropdown" }>{ children }</div>; export default Heading

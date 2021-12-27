@@ -1,7 +1,7 @@
 import Dropdown from '../components/Dropdown'
 import { useEffect } from 'react'
 
-export default () => {
+export default Home = () => {
   useEffect(() => {
     document.title = "GameCounter"
   }, [])

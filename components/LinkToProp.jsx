@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useRef } from 'react'
 
-export default ({ visible, propName, displayName }) => {
+const LinkToProp = ({ visible, propName, displayName }) => {
     const anchor = useRef(null);
     const container = useRef(null);
 
@@ -13,3 +13,5 @@ export default ({ visible, propName, displayName }) => {
             </div>
     </>
 }
+
+export default LinkToProp
