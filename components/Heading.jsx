@@ -1,1 +1,6 @@
-const Heading = ({ children }) => <div className={ "dropdown" }>{ children }</div>; export default Heading
+const Heading = ({ children }) => {
+    return <>
+        <div className={ "dropdown" }>{ children }</div>
+    </>
+}
+ export default Heading
