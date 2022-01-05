@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import Heading from '../../components/Heading'
-import BackButton from '../../components/BackButton'
+import Heading from '/public/components/Heading'
+import BackButton from '/public/components/BackButton'
 
 const BallBouncer = ({  }) => {
     useEffect(() => {
