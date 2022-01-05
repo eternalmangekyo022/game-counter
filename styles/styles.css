@@ -608,3 +608,12 @@ body
     justify-content: center;
     align-items: center;
 }
+.swap-main-container
+{
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    border-radius: 50%;
+    border: .125rem solid black;
+    
+}

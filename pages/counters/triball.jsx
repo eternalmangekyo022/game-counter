@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
-import Heading from '../../components/Heading';
-import BackButton from '../../components/BackButton';
-import MinusButton from '../../components/MinusButton'
+import Heading from '/public/components/Heading';
+import BackButton from '/public/components/BackButton';
+import SwapFields from '/public/components/SwapFields';
+
+const useObject = (defaultState = null) => {
+    const [state, setState] = useState(defaultState);
+
+    const spreadState = (newState = null) => {
+        if(!newState) return
+        setState(prev => { return { ...prev, ...newState } })
+    }
+
+    return [state, setState, spreadState];
+}
 
 class Player {
     constructor(_name="", number, points=0, setWins=0) {
@@ -14,64 +25,73 @@ class Player {
 
 const Triball = () => {
     // state
-    const [player1, setPlayer1] = useState(new Player("Róbert", "first"));
-    const [player2, setPlayer2] = useState(new Player("István", "second"));
-    const [styles, setStyles] = useState({ reset: "", nameContainer: "" });
-    
+
+    const [player1, setPlayer1, spreadPlayer1] = useObject(new Player("player1", "first"));
+    const [player2, setPlayer2, spreadPlayer2] = useObject(new Player("player2", "second"));
+    const [styles, setStyles, spreadStyles] = useObject({ reset: "", nameContainer: "", start: "start" });
+
     // non-stateful state
     const [maxPoints, setMaxPoints] = useState(15);
     const [maxWins, setMaxWins] = useState(3);
 
 
-    const changePlayerName = setPlayer => {
-        const newName = prompt("Új név?");
+    const changePlayerName = spreadPlayer => {
+        const newName = prompt("New name?");
         if(!newName) return null
-        setPlayer(prev => { return { ...prev, name: newName } })
+        spreadPlayer({ name: newName })
     }
 
-    const handlePlusClick = player => {
-        let { points, setWins } = { ...player }
-        const setPlayer = player.number === "first" ? setPlayer1 : setPlayer2
-        points++
-        setPlayer(prev => { return { ...prev, points: prev.points + 1 } })
+    const handlePlusClick = number => {
+        const resetPlayers = (completely=false) => {
+            [setPlayer1, setPlayer2].forEach(i => { i(prev => { return { ...prev, points: 0, setWins: completely ? 0 : prev.setWins } }) });
+        }
 
-        if(points === maxPoints) {
-            points = 0
-            setWins++
-            
-            [setPlayer1, setPlayer2].forEach(i => i(prev => { return { ...prev, points: 0 } }));
-            setPlayer(prev => { return { ...prev, setWins: setWins == maxWins ? 0: setWins } })
-            if(setWins == maxWins) {
-                setPlayer1(prev => { return { ...prev, points: 0, setWins: 0 } });
-                setPlayer2(prev => { return { ...prev, points: 0, setWins: 0 } });
+        const player = number === "first" ? player1 : player2
+        const spreadPlayer = number === "first" ? spreadPlayer1 : spreadPlayer2
+        
+        spreadPlayer({ points: player.points + 1 });
+        if(player.points + 1 === maxPoints) {
+            spreadPlayer({ setWins: player.setWins + 1 });
+            resetPlayers();
+            if(player.setWins + 1 === maxWins) {
+                alert(`${ player.name } won the game!`);
+                resetPlayers(true);
             }
         }
     }
 
+    const handleMinusClick = number => {
+        let player = number === "first" ? { ...player1 } : { ...player2 }
+        let spreadPlayer = number === "first" ? spreadPlayer1 : spreadPlayer2
+
+        if(player.points) spreadPlayer({ points: player.points - 1 })
+        else if(player.setWins) spreadPlayer({ setWins: player.setWins - 1, points: maxPoints - 1 })
+    }
+
     const resetOut = async() => {
-        setStyles(prev => { return { ...prev, reset: "active out" } })
-        setTimeout(() => { setStyles(prev => { return { ...prev, reset: "" } }) }, 300)
+        spreadStyles({ reset: "active out" })
+        setTimeout(() => spreadStyles({ reset: "" }), 300)
     }
 
     const cancelReset = () => {
-        setStyles(prev => { return { ...prev, reset: "" } });
+        spreadStyles({ reset: "" })
         resetOut();
     }
 
     const confirmReset = () => {
         cancelReset();
-        [setPlayer1, setPlayer2].forEach(i => i(prev => { return { ...prev, points: 0, setWins: 0 } }));
+        [spreadPlayer1, spreadPlayer2].forEach(i => i({ points: 0, setWins: 0 }));
     }
 
     const handleResetButton = () => {
-        if(!styles.reset) setStyles(prev => { return { ...prev, reset: "active" } });
+        if(!styles.reset) spreadStyles({ reset: "active" })
         else if(styles.reset == "active") resetOut()
     }
 
     useEffect(() => {
         document.title = "GameCounter - TriBall";
         (async function() {
-            setTimeout(() => { setStyles({ nameContainer: "active" }) }, 1000)
+            setTimeout(() => { spreadStyles({ nameContainer: "active", start: "" }) }, 1000)
         }())
     }, [])
 
@@ -86,11 +106,11 @@ const Triball = () => {
 
                     <div className={ "tri-field-container" }>
 
-                    <div onClick={ e => changePlayerName(setPlayer1) } className={ `name-container first ${ styles.nameContainer }` }>
+                    <div onClick={ e => changePlayerName(spreadPlayer1) } className={ `name-container first ${ styles.nameContainer }` }>
                         <span>{ player1.name }</span>
                     </div>
                     
-                    <div onClick={ e => changePlayerName(setPlayer2) } className={ `name-container second ${ styles.nameContainer }` }>
+                    <div onClick={ e => changePlayerName(spreadPlayer2) } className={ `name-container second ${ styles.nameContainer }` }>
                         <span>{ player2.name }</span>
                     </div>
 
@@ -99,17 +119,23 @@ const Triball = () => {
                             <div className={ "player-set second" }>{ player2.setWins }</div>
                         </div>
 
-                        <MinusButton player={player1} setPlayer={setPlayer1} maxPoints={maxPoints}/>
-                        <MinusButton player={player2} setPlayer={setPlayer2} maxPoints={maxPoints}/>
+                        <div onClick={ e => handleMinusClick("first") } className={ `minus-button first ${styles.start}` }></div>
+                        <div onClick={ e => handleMinusClick("second") } className={ `minus-button second ${styles.start}` }></div>
 
-                        <div onClick={ e => { handlePlusClick(player1) } } className={ "tri-field-big" }></div>
-                        <div onClick={ e => { handlePlusClick(player2) } } className={ "tri-field-big" }></div>
+                        <div onClick={ e => { handlePlusClick("first") } } className={ "tri-field-big" }></div>
+                        <div onClick={ e => { handlePlusClick("second") } } className={ "tri-field-big" }></div>
 
                         <div className={ "tri-field-middle" }>
                             <div className={ "player-point-container first" }><span>{ player1.points }</span></div>
                             <div className={ "player-point-container second" }><span>{ player2.points }</span></div>
                         </div>
                     </div>
+                    <SwapFields
+                        player1={player1}
+                        player2={player2}
+                        spreadPlayer1={spreadPlayer1}
+                        spreadPlayer2={spreadPlayer2}
+                    />
                 </div>
                 <div className={ `popup-container ${ styles.reset }` }>
                     <div className={ `popup ${ styles.reset }` }>

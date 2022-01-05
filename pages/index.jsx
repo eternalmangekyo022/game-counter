@@ -1,4 +1,4 @@
-import Dropdown from '../components/Dropdown'
+import Dropdown from '/public/components/Dropdown'
 import { useEffect } from 'react'
 
 const Home = () => {
