@@ -20,6 +20,7 @@ class Player {
         this.number = number;
         this.points = points;
         this.setWins = setWins;
+        this.lastWinPoints = 0;
     }
 }
 
@@ -48,10 +49,15 @@ const Triball = () => {
 
         const player = number === "first" ? player1 : player2
         const spreadPlayer = number === "first" ? spreadPlayer1 : spreadPlayer2
+        const oppositePlayer = number === "first" ? player2 : player1
+        const spreadOppositePlayer = number === "first" ? spreadPlayer2 : spreadPlayer1
         
         spreadPlayer({ points: player.points + 1 });
         if(player.points + 1 === maxPoints) {
+            spreadOppositePlayer({ lastWinPoints: oppositePlayer.points });
             spreadPlayer({ setWins: player.setWins + 1 });
+            
+            alert(oppositePlayer.points)
             resetPlayers();
             if(player.setWins + 1 === maxWins) {
                 alert(`${ player.name } won the game!`);
@@ -61,11 +67,16 @@ const Triball = () => {
     }
 
     const handleMinusClick = number => {
-        let player = number === "first" ? { ...player1 } : { ...player2 }
-        let spreadPlayer = number === "first" ? spreadPlayer1 : spreadPlayer2
+        const player = number === "first" ? { ...player1 } : { ...player2 };
+        const spreadPlayer = number === "first" ? spreadPlayer1 : spreadPlayer2;
+        const oppositePlayer = number === "first" ? player2 : player1;
+        const spreadOppositePlayer = number === "first" ? spreadPlayer2 : spreadPlayer1;
 
-        if(player.points) spreadPlayer({ points: player.points - 1 })
-        else if(player.setWins) spreadPlayer({ setWins: player.setWins - 1, points: maxPoints - 1 })
+        if(player.points) spreadPlayer({ points: player.points - 1 });
+        else if(player.setWins) {
+            spreadPlayer({ setWins: player.setWins - 1, points: maxPoints - 1 });
+            spreadOppositePlayer({ points: oppositePlayer.lastWinPoints });
+        }
     }
 
     const resetOut = async() => {
@@ -98,6 +109,12 @@ const Triball = () => {
     return <>
                 <Heading>
                     <BackButton />
+                    <SwapFields
+                        player1={player1}
+                        player2={player2}
+                        spreadPlayer1={spreadPlayer1}
+                        spreadPlayer2={spreadPlayer2}
+                    />
                     <div onClick={ handleResetButton } className={ "reset-button-container" }>
                         <div>!</div>
                     </div>
@@ -130,12 +147,7 @@ const Triball = () => {
                             <div className={ "player-point-container second" }><span>{ player2.points }</span></div>
                         </div>
                     </div>
-                    <SwapFields
-                        player1={player1}
-                        player2={player2}
-                        spreadPlayer1={spreadPlayer1}
-                        spreadPlayer2={spreadPlayer2}
-                    />
+
                 </div>
                 <div className={ `popup-container ${ styles.reset }` }>
                     <div className={ `popup ${ styles.reset }` }>

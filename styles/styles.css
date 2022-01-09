@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+::before, ::after
+{
+    content: "";
+    position: absolute;
+}
 :root
 {
     --dropdown-height: 8vh;
@@ -21,37 +26,6 @@ body
     height: 100vh;
     background-color: rgb(232, 232, 232);
     overflow: hidden;
-}
-@media only screen and (max-width: 600px){
-    body
-    {
-        height: 90vh;
-    }
-    .dropdown-toggle-container
-    {
-        transform: translateY(-50%);
-        left: 10% !important;
-    }
-    .dropdown-toggle-container.active
-    {
-        left: 8% !important;
-    }
-    .content-wrapper
-    {
-        height: calc(90vh - var(--dropdown-height)) !important;
-    }
-
-    .reset-button-container
-    {
-        animation-name: none !important;
-    }
-    .player-set-container
-    {
-        width: 2rem !important;
-        height: 4rem !important;
-    }
-
-    
 }
 .center
 {
@@ -351,8 +325,6 @@ body
 .reset-button-container::before,
 .reset-button-container::after
 {
-    content: "";
-    position: absolute;
     width: 100%;
     height: .125rem;
     background: black;
@@ -405,10 +377,8 @@ body
     animation-delay: 1s;
     animation-fill-mode: forwards;
 }
-.minus-button:before
+.minus-button::before
 {
-    content: "";
-    position: absolute;
     height: 15%;
     width: 20%;
     background: black;
@@ -565,22 +535,20 @@ body
     align-items: center;
     height: 50%;
 }
-.tri-field-middle:before,
-.tri-field-middle:after
+.tri-field-middle::before,
+.tri-field-middle::after
 {
-    content: "";
-    position: absolute;
     top: 50%;
     left: 50%;
     width: 35%;
     height: .125rem;
     background: black;
 }
-.tri-field-middle:before
+.tri-field-middle::before
 {
     transform: translate(-50%, -50%) rotate(45deg);
 }
-.tri-field-middle:after
+.tri-field-middle::after
 {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
@@ -611,9 +579,77 @@ body
 .swap-main-container
 {
     width: 3rem;
-    aspect-ratio: 1 / 1;
+    height: 2.4rem;
     position: absolute;
-    border-radius: 50%;
-    border: .125rem solid black;
-    
+    cursor: pointer;
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+
+}
+.swap-pointer
+{
+    position: absolute;
+    height: 100%;
+    width: .2rem;
+    background: black;
+    left: 50%;
+}
+.swap-pointer::before, .swap-pointer::after
+{
+    width: inherit;
+    height: 1rem;
+    background: black;
+}
+.swap-pointer::before
+{
+    rotate: 30deg;
+    translate: -100%;
+}
+.swap-pointer::after
+{
+    rotate: -30deg;
+    translate: 100%;
+}
+.swap-pointer.first
+{
+    left: 30%;
+}
+.swap-pointer.second
+{
+    left: 70%;
+    rotate: 180deg;
+}
+@media only screen and (max-width: 600px){
+    body
+    {
+        height: 90vh;
+    }
+    .dropdown-toggle-container
+    {
+        transform: translateY(-50%);
+        left: 10%;
+    }
+    .dropdown-toggle-container.active
+    {
+        left: 8%;
+    }
+    .content-wrapper
+    {
+        height: calc(90vh - var(--dropdown-height));
+    }
+
+    .reset-button-container
+    {
+        animation-name: none;
+    }
+    .player-set-container
+    {
+        width: 2rem;
+        height: 4rem;
+    }
+    .swap-main-container
+    {
+        right: 20%;
+    }
 }

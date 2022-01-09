@@ -8,11 +8,11 @@ const SwapFields = ({ player1, player2, spreadPlayer1, spreadPlayer2 }) => {
 
     return <>
         <div className={ "swap-main-container" } onClick={ swapFields }>
-            <div className={ "swap-pointer" }>
+            <div className={ "swap-pointer first" }>
                 <div className={ "swap-pointer-line" }></div>
                 <div className={ "swap-pointer-triangle" }></div>
             </div>
-            <div className={ "swap-pointer" }>
+            <div className={ "swap-pointer second" }>
                 <div className={ "swap-pointer-line" }></div>
                 <div className={ "swap-pointer-triangle" }></div>
             </div>
