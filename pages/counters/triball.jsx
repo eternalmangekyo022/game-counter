@@ -2,17 +2,7 @@ import { useState, useEffect } from 'react';
 import Heading from '/public/components/Heading';
 import BackButton from '/public/components/BackButton';
 import SwapFields from '/public/components/SwapFields';
-
-const useObject = (defaultState = null) => {
-    const [state, setState] = useState(defaultState);
-
-    const spreadState = (newState = null) => {
-        if(!newState) return
-        setState(prev => { return { ...prev, ...newState } })
-    }
-
-    return [state, setState, spreadState];
-}
+import { useObject } from '/public/hooks'
 
 class Player {
     constructor(_name="", number, points=0, setWins=0) {
@@ -56,8 +46,6 @@ const Triball = () => {
         if(player.points + 1 === maxPoints) {
             spreadOppositePlayer({ lastWinPoints: oppositePlayer.points });
             spreadPlayer({ setWins: player.setWins + 1 });
-            
-            alert(oppositePlayer.points)
             resetPlayers();
             if(player.setWins + 1 === maxWins) {
                 alert(`${ player.name } won the game!`);
