@@ -57,7 +57,6 @@ const Triball = () => {
             spreadOppositePlayer({ lastWinPoints: oppositePlayer.points });
             spreadPlayer({ setWins: player.setWins + 1 });
             
-            alert(oppositePlayer.points)
             resetPlayers();
             if(player.setWins + 1 === maxWins) {
                 alert(`${ player.name } won the game!`);
